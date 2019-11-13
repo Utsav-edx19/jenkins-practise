@@ -1,0 +1,41 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Cleaning Stage') {
+        steps{
+            dir("C:\\Training\\Maven\\webapp"){
+                // To run Maven on a Windows agent, use
+                bat "mvn clean"
+            }
+        }
+      }
+      
+      stage('Testing Stage') {
+        steps{
+            dir("C:\\Training\\Maven\\webapp"){
+                // To run Maven on a Windows agent, use
+                bat "mvn test"
+            }
+        }
+      }
+      
+      stage('Packaging Stage') {
+        steps{
+            dir("C:\\Training\\Maven\\webapp"){
+                // To run Maven on a Windows agent, use
+                bat "mvn package"
+            }
+        }
+      }
+      
+      stage('Deployment Stage') {
+        steps{
+            dir("C:\\Training\\Maven\\webapp"){
+                // To run Maven on a Windows agent, use
+                deploy adapters: [tomcat9(credentialsId: 'TomcatDeploy', path: '', url: 'http://localhost:8081/')], contextPath: '/webapp', onFailure: false, war: '**/*.war'
+            }
+        }
+      }
+   }
+}
