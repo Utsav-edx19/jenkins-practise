@@ -1,0 +1,19 @@
+@Library('jenkins-shared-library@master') _
+
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+            script { 
+                sayHello.noName()
+                sayHello.name()
+                sayHello.name 'Utsav'
+                log.info 'How are you?'
+                log.warning 'Hope you are fine!'
+            }
+         }
+      }
+   }
+}
